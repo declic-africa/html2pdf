@@ -1,8 +1,6 @@
-const fs = require("fs");
 const puppeteer = require("puppeteer");
 const utils = require("./utils");
 const bodyParser = require("body-parser");
-const fetch = require("node-fetch");
 
 var jsonParser = bodyParser.json();
 
@@ -12,6 +10,19 @@ const DEFAULT_VIEWPORT = {
   width: 1000,
   height: 2000,
   deviceScaleFactor: 1,
+};
+
+const chromeOptions = {
+  headless: true,
+  ignoreHTTPSErrors: true,
+  timeout: TIMEOUT,
+  defaultViewport: DEFAULT_VIEWPORT,
+  args: [
+    // executablePath: "/usr/bin/google-chrome",
+    "--no-sandbox",
+    "--single-process",
+    "--no-zygote"
+  ],
 };
 
 module.exports = (app) => {
@@ -35,13 +46,7 @@ module.exports = (app) => {
           );
       }
 
-      const browser = await puppeteer.launch({
-        // executablePath: "/usr/bin/google-chrome",
-        args: ["--no-sandbox"],
-        ignoreHTTPSErrors: true,
-        timeout: TIMEOUT,
-        defaultViewport: DEFAULT_VIEWPORT,
-      });
+      const browser = await puppeteer.launch(chromeOptions);
 
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: "networkidle0", timeout: TIMEOUT });
@@ -85,13 +90,7 @@ module.exports = (app) => {
     console.log(url);
 
     try {
-      const browser = await puppeteer.launch({
-        // executablePath: "/usr/bin/google-chrome",
-        args: ["--no-sandbox"],
-        ignoreHTTPSErrors: ignoreSSLErrors,
-        defaultViewport: DEFAULT_VIEWPORT,
-        timeout: TIMEOUT,
-      });
+      const browser = await puppeteer.launch(chromeOptions);
       const page = await browser.newPage();
       if (url !== undefined) {
         await page.goto(url, { waitUntil: "networkidle0", timeout: TIMEOUT });
