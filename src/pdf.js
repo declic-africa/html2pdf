@@ -23,7 +23,6 @@ const browserOptions = {
     "--single-process",
     "--no-zygote"
   ],
-  product: 'firefox'
 };
 
 module.exports = (app) => {
