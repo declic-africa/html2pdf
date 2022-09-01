@@ -12,7 +12,7 @@ const DEFAULT_VIEWPORT = {
   deviceScaleFactor: 1,
 };
 
-const chromeOptions = {
+const browserOptions = {
   headless: true,
   ignoreHTTPSErrors: true,
   timeout: TIMEOUT,
@@ -23,6 +23,7 @@ const chromeOptions = {
     "--single-process",
     "--no-zygote"
   ],
+  product: 'firefox'
 };
 
 module.exports = (app) => {
@@ -46,7 +47,7 @@ module.exports = (app) => {
           );
       }
 
-      const browser = await puppeteer.launch(chromeOptions);
+      const browser = await puppeteer.launch(browserOptions);
 
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: "networkidle0", timeout: TIMEOUT });
@@ -90,7 +91,7 @@ module.exports = (app) => {
     console.log(url);
 
     try {
-      const browser = await puppeteer.launch(chromeOptions);
+      const browser = await puppeteer.launch(browserOptions);
       const page = await browser.newPage();
       if (url !== undefined) {
         await page.goto(url, { waitUntil: "networkidle0", timeout: TIMEOUT });
