@@ -78,9 +78,7 @@ module.exports = (app) => {
         let url = req.body.url;
         let html = req.body.html;
         let media = req.body.media === "print" ? "print" : "screen";
-        let printBackground = req.body.printBackground !== false;
         let isLandscape = req.body.landscape > 0;
-        let margin = req.body.margin;
         let headerTemplate = req.body.headerTemplate;
         let footerTemplate = req.body.footerTemplate;
         let ignoreSSLErrors = req.body.ignoreSSLErrors > 0;
@@ -106,7 +104,7 @@ module.exports = (app) => {
 
             let opts = {
                 format: "A2",
-                printBackground: printBackground,
+                printBackground: true,
                 landscape: isLandscape,
                 margin: MARGIN,
                 headerTemplate: headerTemplate,
