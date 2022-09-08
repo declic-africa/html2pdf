@@ -103,7 +103,7 @@ module.exports = (app) => {
             }
 
             let opts = {
-                format: "A2",
+                format: "A4",
                 printBackground: true,
                 landscape: isLandscape,
                 margin: MARGIN,
